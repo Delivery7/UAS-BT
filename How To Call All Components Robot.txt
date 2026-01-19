@@ -1,0 +1,64 @@
+<!-- how to call lidar -->
+1. ros2 launch simple_robot rplidar.launch.py
+2. bobby@bobby:~/dev_ws$ ros2 run rplidar_ros rplidar_composition --ros-args -p serial_port:=/dev/serial/by-path/pci-0000:00:14.0-usb-0:1.1:1.0-port0 -p frame_id:=laser_frame -p angle_compensate:=true -p scan_mode:=Standard -p serial_baudrate:=256000
+
+
+<!-- how to call join state publisher -->
+1. ros2 run joint_state_publisher_gui joint_state_publisher_gui
+
+<!-- how to call teleop keyboard -->
+1. ros2 run  teleop_twist_keyboard teleop_twist_keyboard
+
+
+<!-- how to call gazebo and robot -->
+1. ros2 launch simple_robot launch_sim.launch.py world:=./src/simple_robot/worlds/obstacles.world
+
+<!-- how to video in brio 4k webcam -->
+ffmpeg -f v4l2 -i /dev/video2 -t 10 coba.mp4
+
+<!-- how to video in brio 4k webcam on raspberry pi -->
+ros2 run v4l2_camera v4l2_camera_node --ros-args -p image_size:="[3840,2160]" -p camera_frame_id:="camera_link_optical"
+
+<!-- how to call map main.rviz -->
+rviz2 -d src/simple_robot/config/main.rviz
+
+<!-- how to call slam_toolbox -->
+ros2 launch slam_toolbox online_async_launch.py params_file:=./src/simple_robot//config/mapper_params_online_async.yaml use_time:=true
+
+ros2 run nav2_amcl amcl --ros-args -p use_sim_time:=true
+
+ros2 run nav2_util lifecycle_bringup amcl
+
+ros2 run nav2_util lifecycle_bringup map_server
+
+ros2 run nav2_map_server map_server --ros-args -p yaml_filename:=my_map_save.yaml -p use_sim_time:=true
+
+<!-- how to call bringup map_server and amcl -->
+ros2 launch nav2_bringup localization_launch.py map:=./my_map_save.yaml use_sim_time:=true
+
+ros2 launch nav2_bringup localization_launch.py map:=./my_map_save.yaml use_sim_time:=true map_subcribe_transient_local:=true
+
+ros2 launch simple_robot navigation_launch.py use_sim_time:=true map_subcribe_transient_local:=true
+
+
+<!-- how to call Arduino ide -->
+cd Downloads
+cd arduino-ide_2.3.3_Linux_64bit
+./arduino-ide
+
+
+<-- how to run robot -->
+1. ros2 launch simple_robot launch_sim.launch.py world:=./src/simple_robot/worlds/labirin2.world
+2. rviz2 -d src/simple_robot/config/labirin2.rviz
+3. ros2 launch simple_robot navigation_launch.py use_sim_time:=true map_subcribe_transient_local:=true
+4. ros2 launch slam_toolbox online_async_launch.py params_file:=./src/simple_robot/config/mapper_params_online_async.yaml use_time:=true
+5. ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap /cmd_vel:=/cmd_vel
+
+<-- How To run Motor Gui -->
+ros2 run serial_motor_demo driver --ros-args -p serial_port:=/dev/ttyACM0 -p baud_rate:=57600 -p loop_rate:=30 -p encoder_cpr:=3450
+ros2 run serial_motor_demo driver --ros-args -p serial_port:=/dev/ttyUSB0 -p baud_rate:=57600 -p loop_rate:=30 -p encoder_cpr:=3450
+ros2 run serial_motor_demo gui
+
+<-- How to run pyserial -->
+ros2 run pyserial coba1
+ros2run gamepad_pkg gamepad_testing

@@ -1,0 +1,55 @@
+############################
+# ROS 2 build artifacts
+############################
+build/
+install/
+log/
+
+############################
+# Colcon & ROS
+############################
+*.bag
+*.db
+*.db3
+*.sqlite3
+
+############################
+# Python
+############################
+__pycache__/
+*.pyc
+*.pyo
+
+############################
+# VS Code / IDE
+############################
+.vscode/
+.idea/
+
+############################
+# OS files
+############################
+.DS_Store
+Thumbs.db
+
+############################
+# Temporary / backup files
+############################
+*~
+*.swp
+*.tmp
+
+############################
+# CMake
+############################
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+############################
+# Jangan ignore source code
+############################
+!src/simplerobot_bt
+src/simple_robot
+!src/**/
